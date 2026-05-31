@@ -12,7 +12,9 @@ export class NodeInitialParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.akPropBundle1.write(buffer);
     this.akPropBundle2.write(buffer);
+    return buffer.index - start;
   }
 }

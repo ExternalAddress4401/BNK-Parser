@@ -16,7 +16,9 @@ export class BankHeader {
 
   write(buffer: BufferedWriter) {
     buffer.writeString(this.dwTag, false);
-    buffer.writeUInt32(this.dwChunkSize);
-    this.akBankHeader.write(buffer);
+    const sizeOffset = buffer.index;
+    buffer.writeUInt32(0);
+    const bytesWritten = this.akBankHeader.write(buffer);
+    buffer.writeUInt32At(sizeOffset, bytesWritten);
   }
 }

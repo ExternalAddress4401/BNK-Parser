@@ -15,8 +15,10 @@ export class AkBankSourceData {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.ulPluginID.write(buffer);
     buffer.writeByte(this.StreamType);
     this.akMediaInformation.write(buffer);
+    return buffer.index - start;
   }
 }

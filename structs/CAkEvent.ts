@@ -16,10 +16,12 @@ export class CAkEvent {
 
   write(buffer: BufferedWriter) {
     buffer.writeByte(this.eHircType);
-    buffer.writeUInt32(this.dwSectionSize);
+    const sizeOffset = buffer.index;
+    buffer.writeUInt32(0);
+    const start = buffer.index;
     buffer.writeUInt32(this.ulID);
-
     this.eventInitialValues.write(buffer);
+    buffer.writeUInt32At(sizeOffset, buffer.index - start);
   }
 }
 
@@ -34,10 +36,12 @@ class EventInitialValues {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeByte(this.actions.length);
     for (const item of this.actions) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }
 
@@ -49,6 +53,8 @@ class Action {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.ulActionId);
+    return buffer.index - start;
   }
 }

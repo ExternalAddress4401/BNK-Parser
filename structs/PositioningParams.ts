@@ -10,6 +10,8 @@ export class PositioningParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.uBitsPositioning.write(buffer);
+    return buffer.index - start;
   }
 }

@@ -17,11 +17,12 @@ export class MusicTransNodeParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.musicNodeParams.write(buffer);
     buffer.writeUInt32(this.pRules.length);
-
     for (const item of this.pRules) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }

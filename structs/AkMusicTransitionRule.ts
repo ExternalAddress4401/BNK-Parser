@@ -33,22 +33,21 @@ export class AkMusicTransitionRule {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.akMusicTransSrcRules.length);
     buffer.writeInt32(this.srcID);
     buffer.writeUInt32(this.akMusicTransDstRules.length);
     buffer.writeInt32(this.dstID);
-
     for (const item of this.akMusicTransSrcRules) {
       item.write(buffer);
     }
     for (const item of this.akMusicTransDstRules) {
       item.write(buffer);
     }
-
     buffer.writeByte(this.AllocTransObjectFlag);
-
     if (this.AllocTransObjectFlag) {
       this.AkMusicTransitionObject?.write(buffer);
     }
+    return buffer.index - start;
   }
 }

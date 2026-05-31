@@ -13,8 +13,10 @@ export class AkMusicMarkerWwise {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.id);
     buffer.writeDouble(this.fPosition);
     buffer.writeString(this.pMarkerName);
+    return buffer.index - start;
   }
 }

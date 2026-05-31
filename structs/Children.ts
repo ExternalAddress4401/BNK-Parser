@@ -13,9 +13,11 @@ export class Children {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.ulChildIDs.length);
     for (const item of this.ulChildIDs) {
       buffer.writeUInt32(item);
     }
+    return buffer.index - start;
   }
 }

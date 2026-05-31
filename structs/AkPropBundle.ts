@@ -12,10 +12,12 @@ export class AkPropBundle {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeByte(this.pProps.length);
     for (const item of this.pProps) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }
 
@@ -29,7 +31,9 @@ class AkPropBundleChild {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeByte(this.pID);
     buffer.writeFloat(this.pValue);
+    return buffer.index - start;
   }
 }

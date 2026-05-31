@@ -17,10 +17,12 @@ export class AkMeterInfo {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeDouble(this.fGridPeriod);
     buffer.writeDouble(this.fGridOffset);
     buffer.writeFloat(this.fTempo);
     buffer.writeByte(this.uTimeSigNumBeatsBar);
     buffer.writeByte(this.uTimeSigBeatValue);
+    return buffer.index - start;
   }
 }

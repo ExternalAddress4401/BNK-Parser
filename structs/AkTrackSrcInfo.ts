@@ -21,6 +21,7 @@ export class AkTrackSrcInfo {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.trackID);
     buffer.writeUInt32(this.sourceID);
     buffer.writeUInt32(this.eventID);
@@ -28,5 +29,6 @@ export class AkTrackSrcInfo {
     buffer.writeDouble(this.fBeginTrimOffset);
     buffer.writeDouble(this.fEndTrimOffset);
     buffer.writeDouble(this.fSrcDuration);
+    return buffer.index - start;
   }
 }

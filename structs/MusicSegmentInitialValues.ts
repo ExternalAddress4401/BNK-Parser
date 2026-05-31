@@ -19,12 +19,13 @@ export class MusicSegmentInitialValues {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.musicNodeParams.write(buffer);
     buffer.writeDouble(this.fDuration);
     buffer.writeUInt32(this.pArrayMarkers.length);
-
     for (const item of this.pArrayMarkers) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }

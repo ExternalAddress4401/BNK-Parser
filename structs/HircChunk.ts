@@ -55,10 +55,13 @@ export class HircChunk {
 
   write(buffer: BufferedWriter) {
     buffer.writeString(this.dwTag, false);
-    buffer.writeUInt32(this.dwChunkSize);
+    const sizeOffset = buffer.index;
+    buffer.writeUInt32(0);
+    const start = buffer.index;
     buffer.writeUInt32(this.listLoadedItem.length);
     for (const item of this.listLoadedItem) {
       item.write(buffer);
     }
+    buffer.writeUInt32At(sizeOffset, buffer.index - start);
   }
 }

@@ -11,7 +11,9 @@ export class AkGameSync {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.ulGroup);
     buffer.writeByte(this.eGroupType);
+    return buffer.index - start;
   }
 }

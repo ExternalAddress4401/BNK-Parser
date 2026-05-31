@@ -24,13 +24,14 @@ export class MusicNodeParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.uFlags.write(buffer);
     this.nodeBaseParams.write(buffer);
     this.Children.write(buffer);
     this.akMeterInfo.write(buffer);
     buffer.writeByte(this.bMeterInfoFlag);
     buffer.writeUInt32(this.pStingers.length);
-
     // stingers are unused
+    return buffer.index - start;
   }
 }

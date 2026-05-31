@@ -16,11 +16,12 @@ export class Arguments {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     for (const item of this.pArguments) {
       item.write(buffer);
     }
-
     buffer.writeUInt32(this.uTreeDataSize);
     buffer.writeByte(this.uMode);
+    return buffer.index - start;
   }
 }

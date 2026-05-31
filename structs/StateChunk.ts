@@ -11,7 +11,9 @@ export class StateChunk {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeByte(this.stateProps.length);
     buffer.writeByte(this.pStateChunks.length);
+    return buffer.index - start;
   }
 }

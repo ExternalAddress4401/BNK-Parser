@@ -12,7 +12,9 @@ export class AuxParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.byBitVector.write(buffer);
     buffer.writeUInt32(this.reflectionAuxBus);
+    return buffer.index - start;
   }
 }

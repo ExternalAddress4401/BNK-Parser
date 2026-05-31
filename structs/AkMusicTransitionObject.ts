@@ -17,11 +17,13 @@ export class AkMusicTransitionObject {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.segmentID);
     this.fadeInParams.write(buffer);
     this.fadeOutParams.write(buffer);
     buffer.writeByte(this.bPlayPreEntry);
     buffer.writeByte(this.bPlayPostExit);
+    return buffer.index - start;
   }
 }
 
@@ -37,8 +39,10 @@ class FadeParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeInt32(this.transitionTime);
     buffer.writeUInt32(this.eFadeCurve);
     buffer.writeInt32(this.iFadeOffset);
+    return buffer.index - start;
   }
 }

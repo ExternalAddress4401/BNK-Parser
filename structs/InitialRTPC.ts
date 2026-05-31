@@ -13,9 +13,11 @@ export class InitialRTPC {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeShort(this.pRTPCMgr.length);
     for (const item of this.pRTPCMgr) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }

@@ -33,6 +33,7 @@ export class AkMusicRanSeqPlaylistItem {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.SegmentID);
     buffer.writeUInt32(this.playlistItemID);
     buffer.writeUInt32(this.pPlayList.length);
@@ -44,10 +45,10 @@ export class AkMusicRanSeqPlaylistItem {
     buffer.writeUShort(this.wAvoidRepeatCount);
     buffer.writeByte(this.bIsUsingWeight);
     buffer.writeByte(this.bIsShuffle);
-
     for (const item of this.pPlayList) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 
   countChildren() {

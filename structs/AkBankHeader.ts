@@ -21,6 +21,7 @@ export class AkBankHeader {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.dwBankGeneratorVersion);
     buffer.writeUInt32(this.dwSoundBankID);
     buffer.writeUInt32(this.dwLanguageID);
@@ -28,5 +29,6 @@ export class AkBankHeader {
     buffer.writeUInt32(this.dwProjectID);
     buffer.writeUInt32(this.dwSoundBankType);
     buffer.writeGap(this.abyBankHash);
+    return buffer.index - start;
   }
 }

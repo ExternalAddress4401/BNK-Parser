@@ -15,9 +15,10 @@ export class MusicRanSeqCntrInitialValues {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.musicTransNodeParams.write(buffer);
-
     buffer.writeUInt32(this.pPlayList.countChildren());
     this.pPlayList.write(buffer);
+    return buffer.index - start;
   }
 }

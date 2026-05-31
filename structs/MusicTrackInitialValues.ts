@@ -45,28 +45,26 @@ export class MusicTrackInitialValues {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.uFlags.write(buffer);
     buffer.writeUInt32(this.pSource.length);
     for (const item of this.pSource) {
       item.write(buffer);
     }
-
     buffer.writeUInt32(this.pPlaylist.length);
     for (const item of this.pPlaylist) {
       item.write(buffer);
     }
-
     if (this.numSubtrack) {
       buffer.writeUInt32(this.numSubtrack);
     }
-
     buffer.writeUInt32(this.pItems.length);
     for (const item of this.pItems) {
       item.write(buffer);
     }
-
     this.nodeBaseParams.write(buffer);
     buffer.writeByte(this.eTrackType);
     buffer.writeUInt32(this.iLookAheadTime);
+    return buffer.index - start;
   }
 }

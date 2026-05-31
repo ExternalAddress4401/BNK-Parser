@@ -21,12 +21,12 @@ export class MusicSwitchCntrInitialValues {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.musicTransNodeParams.write(buffer);
-
     buffer.writeByte(this.bIsContinuePlayback);
     buffer.writeUInt32(this.uTreeDepth);
-
     this.Arguments.write(buffer);
     this.akDecisionTree.write(buffer);
+    return buffer.index - start;
   }
 }

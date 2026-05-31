@@ -26,16 +26,17 @@ export class RTPC {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.RTPCID);
     buffer.writeByte(this.rtpcType);
     buffer.writeByte(this.rtpcAccum);
     buffer.writeByte(this.ParamID);
     buffer.writeUInt32(this.rtpcCurveID);
     buffer.writeByte(this.eScaling);
-
     buffer.writeShort(this.pRTPCMgr.length);
     for (const item of this.pRTPCMgr) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }

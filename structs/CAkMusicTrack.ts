@@ -18,9 +18,11 @@ export class CAkMusicTrack {
 
   write(buffer: BufferedWriter) {
     buffer.writeByte(this.eHircType);
-    buffer.writeUInt32(this.dwSectionSize);
+    const sizeOffset = buffer.index;
+    buffer.writeUInt32(0);
+    const start = buffer.index;
     buffer.writeUInt32(this.ulID);
-
     this.musicTrackInitialValues.write(buffer);
+    buffer.writeUInt32At(sizeOffset, buffer.index - start);
   }
 }

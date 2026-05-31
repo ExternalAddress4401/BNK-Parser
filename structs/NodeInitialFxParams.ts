@@ -11,7 +11,9 @@ export class NodeInitialFxParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeByte(this.bIsOverrideParentFX);
     buffer.writeByte(this.uNumFx);
+    return buffer.index - start;
   }
 }

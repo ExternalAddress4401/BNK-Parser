@@ -14,8 +14,10 @@ export class AkMediaInformation {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.sourceID);
     buffer.writeUInt32(this.uInMemoryMediaSize);
     this.uSourceBits.write(buffer);
+    return buffer.index - start;
   }
 }

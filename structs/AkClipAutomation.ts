@@ -18,11 +18,13 @@ export class AkClipAutomation {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.uClipIndex);
     buffer.writeUInt32(this.eAutoType);
     buffer.writeUInt32(this.pArrayGraphPoints.length);
     for (const item of this.pArrayGraphPoints) {
       item.write(buffer);
     }
+    return buffer.index - start;
   }
 }

@@ -19,11 +19,13 @@ export class AkMusicTransSrcRule {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeInt32(this.transitionTime);
     buffer.writeUInt32(this.eFadeCurve);
     buffer.writeInt32(this.iFadeOffset);
     buffer.writeUInt32(this.eSyncType);
     buffer.writeUInt32(this.uCueFilterHash);
     buffer.writeByte(this.bPlayPostExit);
+    return buffer.index - start;
   }
 }

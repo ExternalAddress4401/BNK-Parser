@@ -21,11 +21,13 @@ export class CAkActionSetSwitch {
 
   write(buffer: BufferedWriter) {
     buffer.writeByte(this.eHircType);
-    buffer.writeUInt32(this.dwSectionSize);
+    const sizeOffset = buffer.index;
+    buffer.writeUInt32(0);
+    const start = buffer.index;
     buffer.writeUInt32(this.ulID);
     buffer.writeShort(this.ulActionType);
-
     this.actionInitialValues.write(buffer);
+    buffer.writeUInt32At(sizeOffset, buffer.index - start);
   }
 }
 
@@ -45,11 +47,13 @@ class ActionInitialValues {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.idExt);
     this.idExt_4.write(buffer);
     this.akPropBundle.write(buffer);
     this.akPropBundle2.write(buffer);
     this.switchActionParams.write(buffer);
+    return buffer.index - start;
   }
 }
 
@@ -63,7 +67,9 @@ class SwitchActionParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.ulSwitchGroupID);
     buffer.writeUInt32(this.ulSwitchStateID);
+    return buffer.index - start;
   }
 }

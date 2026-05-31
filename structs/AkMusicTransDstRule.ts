@@ -25,6 +25,7 @@ export class AkMusicTransDstRule {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeInt32(this.transitionTime);
     buffer.writeUInt32(this.eFadeCurve);
     buffer.writeInt32(this.iFadeOffset);
@@ -34,5 +35,6 @@ export class AkMusicTransDstRule {
     buffer.writeShort(this.eEntryType);
     buffer.writeByte(this.bPlayPreEntry);
     buffer.writeByte(this.bDestMatchSourceCueName);
+    return buffer.index - start;
   }
 }

@@ -13,11 +13,13 @@ export class AkDecisionTree {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     if (this.pNodes[0] instanceof Node) {
       (this.pNodes[0] as Node).write(buffer);
     } else {
       writeLevel(buffer, this.pNodes);
     }
+    return buffer.index - start;
   }
 }
 
@@ -80,11 +82,13 @@ class TopLevelNode {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.key);
     buffer.writeUShort(this.childrenIdx);
     buffer.writeUShort(this.pNodes.length);
     buffer.writeUShort(this.uWeight);
     buffer.writeUShort(this.uProbability);
+    return buffer.index - start;
   }
 }
 
@@ -102,9 +106,11 @@ class Node {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     buffer.writeUInt32(this.key);
     buffer.writeUInt32(this.audioNodeId);
     buffer.writeUShort(this.uWeight);
     buffer.writeUShort(this.uProbability);
+    return buffer.index - start;
   }
 }

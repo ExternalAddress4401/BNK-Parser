@@ -18,10 +18,12 @@ export class AdvSettingsParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.byBitVector.write(buffer);
     buffer.writeByte(this.eVirtualQueueBehavior);
     buffer.writeShort(this.u16MaxNumInstance);
     buffer.writeByte(this.eBelowThresholdBehavior);
     this.byBitVector2.write(buffer);
+    return buffer.index - start;
   }
 }

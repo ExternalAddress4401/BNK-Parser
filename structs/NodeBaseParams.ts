@@ -41,13 +41,13 @@ export class NodeBaseParams {
   }
 
   write(buffer: BufferedWriter) {
+    const start = buffer.index;
     this.nodeInitialFxParams.write(buffer);
     buffer.writeByte(this.bIsOverrideParentMetadata);
     buffer.writeByte(this.uNumFx);
     buffer.writeByte(this.bOverrideAttachmentParams);
     buffer.writeUInt32(this.OverrideBusId);
     buffer.writeUInt32(this.DirectParentID);
-
     this.byBitVector.write(buffer);
     this.nodeInitialParams.write(buffer);
     this.positioningParams.write(buffer);
@@ -55,5 +55,6 @@ export class NodeBaseParams {
     this.advSettingsParams.write(buffer);
     this.stateChunk.write(buffer);
     this.initialRTPC.write(buffer);
+    return buffer.index - start;
   }
 }

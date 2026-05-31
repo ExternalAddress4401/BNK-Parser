@@ -48,4 +48,7 @@ export class BufferedWriter {
   getUsed() {
     return this.buffer.subarray(0, this.index);
   }
+  writeUInt32At(offset: number, i: number) {
+    this.buffer.writeUInt32LE(i, offset);
+  }
 }
